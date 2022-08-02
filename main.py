@@ -1,31 +1,31 @@
 import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
+import cartopy
 
 my_lon, my_lat = 39.826206, 21.422487
-plt.figure(figsize=(3, 3))
+plt.figure()
 ax = plt.axes(
-    projection=ccrs.AzimuthalEquidistant(
+    projection=cartopy.crs.AzimuthalEquidistant(
         central_latitude=my_lat, central_longitude=my_lon
     )
 )
-ax.coastlines(resolution="110m")
-ax.gridlines()
+
 ax.stock_img()
+ax.add_feature(cartopy.feature.LAND)
+ax.add_feature(cartopy.feature.OCEAN)
+ax.add_feature(cartopy.feature.COASTLINE)
+ax.add_feature(cartopy.feature.BORDERS, linestyle="dotted")
+ax.add_feature(cartopy.feature.LAKES, alpha=0.5)
+ax.add_feature(cartopy.feature.RIVERS)
+
+ax.set_global()
+ax.gridlines()
 
 plt.plot(
     my_lon,
     my_lat,
-    color="green",
+    color="#ED2939",
     marker="o",
-    transform=ccrs.Geodetic(),
-)
-
-plt.text(
-    my_lon - 5,
-    my_lat + 4,
-    "Makkah",
-    horizontalalignment="left",
-    transform=ccrs.Geodetic(),
+    transform=cartopy.crs.Geodetic(),
 )
 
 plt.show()
